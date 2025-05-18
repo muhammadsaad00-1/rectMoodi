@@ -9,7 +9,7 @@ function FaceAnalyzer() {
   const fileInputRef = useRef();
   const modelRef = useRef();
   const imgRef = useRef(null);
-
+const [isAnalyzing, setIsAnalyzing] = useState(false);
   // Load model when component mounts
   useEffect(() => {
     loadModel();
@@ -143,75 +143,98 @@ function FaceAnalyzer() {
   };
 
   return (
-    <div className="mood-analyzer-container">
-      <div className="mood-analyzer-content">
+  <div className="mood-analyzer-container">
+    <div className="mood-analyzer-content">
+      <div className="app-header">
         <h1 className="app-title">MoodSense</h1>
-        <p className="app-description">Upload a photo to analyze your mood and get personalized tips</p>
-        
-        <div className="analyzer-section">
-          <div className="button-container">
-            <button 
-              onClick={loadModel} 
-              disabled={modelLoaded}
-              className={`btn ${modelLoaded ? 'btn-success' : 'btn-primary'}`}
-            >
-              {loading ? (
-                <span className="loading-indicator">
-                  <svg className="spinner" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <circle className="spinner-track" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                    <path className="spinner-path" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                  </svg>
-                  Loading...
-                </span>
-              ) : modelLoaded ? "Model Ready" : "Initialize Model"}
-            </button>
-            
-            <input 
-              type="file" 
-              ref={fileInputRef}
-              onChange={handleImageUpload}
-              accept="image/*"
-              className="hidden-input"
-            />
-            
-            <button 
-              onClick={() => fileInputRef.current.click()}
-              disabled={loading || !modelLoaded}
-              className="btn btn-secondary"
-            >
-              Upload Image
-            </button>
-          </div>
-          
-          {image && (
-            <div className="analyzer-content">
-              <div className="image-preview-container">
-                <div className="image-preview">
-                  <img 
-                    ref={imgRef}
-                    src={image} 
-                    alt="Preview" 
-                    className="preview-image"
-                  />
+        <p className="app-description">Discover your emotions through facial analysis</p>
+        <div className="header-decoration">
+          <div className="decoration-circle pink"></div>
+          <div className="decoration-circle blue"></div>
+          <div className="decoration-circle yellow"></div>
+        </div>
+      </div>
+      
+      <div className="analyzer-section">
+        <div className="button-container">
+          <button 
+            onClick={loadModel} 
+            disabled={modelLoaded}
+            className={`btn ${modelLoaded ? 'btn-success' : 'btn-primary'}`}
+          >
+            {loading ? (
+              <span className="loading-indicator">
+                <div className="bouncing-dots">
+                  <div className="dot"></div>
+                  <div className="dot"></div>
+                  <div className="dot"></div>
                 </div>
+                Loading...
+              </span>
+            ) : modelLoaded ? (
+              <>
+                <span className="btn-icon">✓</span> Model Ready
+              </>
+            ) : (
+              <>
+                <span className="btn-icon">⚙️</span> Initialize Model
+              </>
+            )}
+          </button>
+          
+          <input 
+            type="file" 
+            ref={fileInputRef}
+            onChange={handleImageUpload}
+            accept="image/*"
+            className="hidden-input"
+            id="fileInput"
+          />
+          
+          <label 
+            htmlFor="fileInput"
+            className={`btn btn-upload ${loading || !modelLoaded ? 'disabled' : ''}`}
+          >
+            <span className="btn-icon">📷</span> Choose Photo
+          </label>
+        </div>
+        
+        {image && (
+          <div className="analyzer-content">
+            <div className="image-preview-container">
+              <div className="image-preview-frame">
+                <img 
+                  ref={imgRef}
+                  src={image} 
+                  alt="Preview" 
+                  className="preview-image"
+                />
+                <div className="frame-decoration"></div>
               </div>
-              
-              <div className="analysis-container">
-                <button 
-                  onClick={analyzeFace}
-                  disabled={loading || !modelLoaded}
-                  className="btn btn-analyze"
-                >
-                  {loading ? (
-                    <span className="loading-indicator">
-                      <svg className="spinner" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                        <circle className="spinner-track" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                        <path className="spinner-path" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                      </svg>
-                      Analyzing...
-                    </span>
-                  ) : "Analyze Mood"}
-                </button>
+            </div>
+            
+            <div className="analysis-container">
+              <button 
+                onClick={() => {
+                  setIsAnalyzing(true);
+                  analyzeFace().finally(() => setIsAnalyzing(false));
+                }}
+                disabled={loading || !modelLoaded}
+                className="btn btn-analyze"
+              >
+                {loading ? (
+                  <span className="loading-indicator">
+                    <div className="scan-animation">
+                      <div className="scan-line"></div>
+                    </div>
+                    Analyzing...
+                  </span>
+                ) : (
+                  <>
+                    <span className="btn-icon">🔍</span> Analyze Mood
+                  </>
+                )}
+              </button>
                 
                 {prediction && (
                   <div className={`prediction-result ${getEmotionColor(prediction.emotion)}`}>
