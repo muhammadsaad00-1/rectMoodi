@@ -1,0 +1,333 @@
+/* MoodSense.css */
+
+/* General styles */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  line-height: 1.6;
+  color: #333;
+}
+
+.hidden-input {
+  display: none;
+}
+
+/* Container styles */
+.mood-analyzer-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 1.5rem;
+  background-color: #fff;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.mood-analyzer-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Header styles */
+.app-title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+.app-description {
+  color: #666;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+/* Button styles */
+.button-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.btn {
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn:disabled {
+  background-color: #ddd;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background-color: #4f46e5;
+  color: white;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background-color: #4338ca;
+}
+
+.btn-secondary {
+  background-color: #6366f1;
+  color: white;
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background-color: #4f46e5;
+}
+
+.btn-success {
+  background-color: #ecfdf5;
+  color: #047857;
+  border: 1px solid #a7f3d0;
+}
+
+.btn-analyze {
+  width: 180px;
+  background-color: #8b5cf6;
+  color: white;
+  margin-bottom: 1.5rem;
+}
+
+.btn-analyze:hover:not(:disabled) {
+  background-color: #7c3aed;
+}
+
+/* Loading indicator */
+.loading-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.spinner {
+  animation: spin 1s linear infinite;
+  height: 1rem;
+  width: 1rem;
+  margin-right: 0.5rem;
+}
+
+.spinner-track {
+  opacity: 0.25;
+}
+
+.spinner-path {
+  opacity: 0.75;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Analyzer content */
+.analyzer-section {
+  width: 100%;
+}
+
+.analyzer-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+@media (min-width: 992px) {
+  .analyzer-content {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+}
+
+/* Image preview */
+.image-preview-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+@media (min-width: 992px) {
+  .image-preview-container {
+    width: 50%;
+  }
+}
+
+.image-preview {
+  position: relative;
+  width: 16rem;
+  height: 16rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  background-color: #f9fafb;
+}
+
+.preview-image {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+/* Analysis container */
+.analysis-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+@media (min-width: 992px) {
+  .analysis-container {
+    width: 50%;
+  }
+}
+
+/* Prediction styles */
+.prediction-result {
+  width: 90%;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid;
+}
+
+.emotion-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.emotion-emoji {
+  margin-right: 0.5rem;
+  font-size: 2rem;
+}
+
+.emotion-name {
+  font-weight: bold;
+}
+
+.emotion-confidence {
+  margin-left: 0.5rem;
+  font-size: 0.875rem;
+  color: #666;
+}
+
+/* Emotion color styles */
+.emotion-angry {
+  background-color: #fee2e2;
+  border-color: #fca5a5;
+}
+
+.emotion-disgust {
+  background-color: #dcfce7;
+  border-color: #86efac;
+}
+
+.emotion-fear {
+  background-color: #f3e8ff;
+  border-color: #d8b4fe;
+}
+
+.emotion-happy {
+  background-color: #fef9c3;
+  border-color: #fde047;
+}
+
+.emotion-sad {
+  background-color: #dbeafe;
+  border-color: #93c5fd;
+}
+
+.emotion-surprise {
+  background-color: #ffedd5;
+  border-color: #fdba74;
+}
+
+.emotion-neutral {
+  background-color: #f3f4f6;
+  border-color: #d1d5db;
+}
+
+/* Emotion details */
+.emotion-details {
+  margin-bottom: 1rem;
+}
+
+.section-title {
+  font-weight: 500;
+  color: #1f2937;
+  margin-bottom: 0.5rem;
+}
+
+.emotion-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.emotion-bar-container {
+  display: flex;
+  align-items: center;
+}
+
+.emotion-label {
+  width: 6rem;
+  font-size: 0.875rem;
+}
+
+.emotion-progress-container {
+  flex: 1;
+  height: 1rem;
+  background-color: #e5e7eb;
+  border-radius: 9999px;
+  overflow: hidden;
+}
+
+.emotion-progress {
+  height: 100%;
+}
+
+.emotion-progress.primary {
+  background-color: #4f46e5;
+}
+
+.emotion-progress.secondary {
+  background-color: #818cf8;
+}
+
+.emotion-percentage {
+  width: 3rem;
+  text-align: right;
+  font-size: 0.75rem;
+}
+
+/* Tips section */
+.tips-section {
+  width: 100%;
+}
+
+.tips-list {
+  list-style-position: inside;
+  color: #4b5563;
+}
+
+.tips-list li {
+  margin-bottom: 0.25rem;
+}
